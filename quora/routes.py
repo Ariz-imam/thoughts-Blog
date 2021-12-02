@@ -15,8 +15,6 @@ with open('config.json', 'r') as c:
 def home():
     posts = Posts.query.filter_by().all()
     last = math.ceil(len(posts)/int(params['no_of_posts']))
-    #[0: params['no_of_posts']]
-    #posts = posts[]
     page = request.args.get('page')
     if(not str(page).isnumeric()):
         page = 1
