@@ -1,24 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
     <title>{{params['blog_name']}}</title>
-
+    
     <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-
+    
     <!-- Custom fonts for this template -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap" rel="stylesheet" />
-
+    
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
-
-  </head>
+    
+</head>
 
   <body>
 
@@ -34,10 +33,15 @@
         
         <div class="collapse navbar-collapse justify-content-end align-item-center" id="my-navbar">
             <ul class="navbar-nav">
-                <li class="nav-item">
+
+            </ul>
+            
+            <ul class="navbar-nav align-item-center">
+
+                <li class="nav-item align-self-center">
                     <form id="search-form" action="#" method="GET">
-                        <div class="input-group city-search">
-                            <input type="text" class="form-control input-city" id='city' name='city' placeholder="Search queries" />
+                        <div class="input-group query-search">
+                            <input type="text" class="form-control input-query" id='query' name='query' placeholder="Search queries" />
                             <div class="input-group-append">
                                 <button type="submit" class="btn btn-secondary">
                                     <i class="fa fa-search"></i>
@@ -46,41 +50,52 @@
                         </div>
                     </form>
                 </li>
+
                 <div class="nav-vl"></div>
-                <li class="nav-item">
-                    <div class="p-1">
-                        <button class="btn btn-primary btn-sm">Ask me</button>
-                    </div>
+                
+                
+                {% if current_user.is_authenticated %}
+                <li class="nav-item p-2">
+                    <a class="nav-link btn btn-sm btn-primary p-1" href="#" data-toggle="modal" data-target="#query-modal">
+                        Ask me
+                    </a>
                 </li>
-            </ul>
-            <div class="nav-vl"></div>
-            <ul class="navbar-nav">
-                <li class="nav-item">
+
+                <div class='nav-name'>
+                    <strong>Hi, {{current_user.name}}</strong>
+                </div>
+                <li class="nav-item align-self-center">
+                    <a class="nav-link" href="dashboard.php">
+                        <i class="fas fa-user"></i>Dashboard
+                    </a>
+                </li>
+                
+                <div class="nav-vl"></div>
+                
+                <li class="nav-item align-self-center">
+                    <a class="nav-link" href="/logout">
+                        <i class="fas fa-sign-out-alt"></i>Logout
+                    </a>
+                </li>
+                
+                {% else %}
+
+                <li class="nav-item align-self-center">
                     <a class="nav-link" href="#" data-toggle="modal" data-target="#signup-modal">
                         <i class="fas fa-user"></i>Signup
                     </a>
                 </li>
+
                 <div class="nav-vl"></div>
-                <li class="nav-item">
+                    
+                <li class="nav-item align-self-center">
                     <a class="nav-link" href="#" data-toggle="modal" data-target="#login-modal">
                         <i class="fas fa-sign-in-alt"></i>Login
                     </a>
                 </li>
+                    
+                {% endif %}
         
-                <!--<div class='nav-name'>
-                   Hi, <?php echo $_SESSION["full_name"] ?>
-               </div>
-               <li class="nav-item">
-                   <a class="nav-link" href="dashboard.php">
-                       <i class="fas fa-user"></i>Dashboard
-                   </a>
-               </li>
-               <div class="nav-vl"></div>
-               <li class="nav-item">
-                   <a class="nav-link" href="logout.php">
-                       <i class="fas fa-sign-out-alt"></i>Logout
-                   </a>
-               </li> -->
            
             </ul>
             </div>
@@ -120,14 +135,14 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="login-heading">Login with PGLife</h5>
+                <h5 class="modal-title" id="login-heading">Login with Query</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
 
             <div class="modal-body">
-                <form id="login-form" class="form" role="form" method="post" action="api/login_submit.php">
+                <form id="login-form" class="form" role="form" method="post" action="/login">
                     <div class="input-group form-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
@@ -167,14 +182,14 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="signup-heading">Signup with PGLife</h5>
+                <h5 class="modal-title" id="signup-heading">Signup with Query</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
 
             <div class="modal-body">
-                <form id="signup-form" class="form" role="form" method="post" action="api/signup_submit.php">
+                <form id="signup-form" class="form" role="form" method="post" action="/signup">
                     <div class="input-group form-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
@@ -214,6 +229,15 @@
                     <div class="input-group form-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
+                                <i class="fas fa-lock"></i>
+                            </span>
+                        </div>
+                        <input type="password" class="form-control" name="confpassword" placeholder="Confirm Password" minlength="6" required>
+                    </div>
+
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
                                 <i class="fas fa-university"></i>
                             </span>
                         </div>
@@ -242,6 +266,40 @@
                     <a href="#" data-dismiss="modal" data-toggle="modal" data-target="#login-modal">Login</a>
                 </span>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- query form -->
+<div class="modal fade" id="query-modal" tabindex="-1" role="dialog" aria-labelledby="query-heading" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="login-heading">Ask Query</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form id="login-form" class="form" role="form" method="post" action="/login">
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input class="form-control" name="title" placeholder="Query Title" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="desc">Description</label>
+                        <textarea class="form-control" name="desc" id="desc" rows="4" placeholder="Description of Query" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-block btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+
         </div>
     </div>
 </div>
@@ -293,6 +351,7 @@
 
     <!-- Custom scripts for this template -->
     <script src="{{ url_for('static', filename='js/clean-blog.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
 
   </body>
 

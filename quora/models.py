@@ -5,6 +5,8 @@ from datetime import datetime
 from sqlalchemy.orm import composite
 from quora import app
 from dotenv import load_dotenv
+from quora import login_manager
+from flask_login import UserMixin
 
 load_dotenv()
 
@@ -35,6 +37,32 @@ class Posts(db.Model):
     tagline = db.Column(db.String(120), nullable=False)
     date = db.Column(db.String(12), nullable=True)
     img_file = db.Column(db.String(12), nullable=True)
+
+
+
+@login_manager.user_loader
+def load_user(id):
+    return User.query.get(id)
+
+login_manager.login_view = "home"
+
+login_manager.login_message = "User needs to be logged in to view this page"
+
+login_manager.login_message_category = "warning"
+
+
+class User(db.Model, UserMixin):
+    __tablename__ = "users"
+        
+    id = db.Column('user_id', db.Integer, primary_key=True, nullable=False)
+    name = db.Column('fullname', db.String(255), nullable=False)
+    phone = db.Column('phone', db.Integer, nullable=False)
+    email = db.Column('email', db.String(255), nullable=False, unique=True)
+    password = db.Column('pass', db.String(255), nullable = False)
+    gender = db.Column('gender', db.String(255), nullable = False)
+    college = db.Column('college', db.String(255), nullable = False)
+    pic = db.Column('pic', db.LargeBinary, nullable = True)
+
 
 
 

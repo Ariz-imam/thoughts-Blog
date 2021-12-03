@@ -4,8 +4,8 @@ import json
 import os
 import math
 from datetime import datetime
-from quora.models import Posts, Contacts
-from quora import app
+from quora.models import Posts, Contacts, db
+from quora import app, mail
 
 with open('config.json', 'r') as c:
     params = json.load(c)["params"]
@@ -104,12 +104,6 @@ def uploader():
             f.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(f.filename) ))
             return "Uploaded successfully"
 
-
-
-@app.route("/logout")
-def logout():
-    session.pop('user')
-    return redirect('/dashboard')
 
 @app.route("/delete/<string:sno>", methods = ['GET', 'POST'])
 def delete(sno):
