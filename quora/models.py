@@ -39,6 +39,14 @@ class Posts(db.Model):
     img_file = db.Column(db.String(12), nullable=True)
 
 
+class Questions(db.Model):
+    __tablename__ = "questions"
+    sno = db.Column('id', db.Integer, primary_key=True)
+    title = db.Column('ques_title', db.String(255), nullable=False)
+    description = db.Column('ques_desc', db.String(500), nullable=False)
+    posted_by = db.Column('post_by', db.String(255), nullable=True)
+    posted_on = db.Column('post_on', db.DateTime, nullable=True, default=datetime.now())
+
 
 @login_manager.user_loader
 def load_user(id):

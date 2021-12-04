@@ -15,5 +15,7 @@ app.secret_key = secret
 
 from quora import routes
 from quora.auth.routes import auths
+from quora.queries.routes import query
 
+app.register_blueprint(query)
 app.register_blueprint(auths)

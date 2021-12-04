@@ -1,5 +1,4 @@
 window.addEventListener('load', function(){
-    console.log('inside auth,js')
     let signup_form = document.getElementById("signup-form");
     signup_form.addEventListener('submit', function(event){
         
