@@ -1,10 +1,12 @@
 import secrets,  os, math
+from typing import Dict
 from PIL import Image
 from flask import render_template, request, flash, session, redirect, url_for, Blueprint, jsonify
 from passlib.hash import sha256_crypt
 from werkzeug.utils import secure_filename
 from flask_login import login_user, logout_user, login_required, current_user
 from quora.models import Questions, User, db
+
 
 auths = Blueprint('auth', __name__, template_folder='templates', static_folder='static')
 
@@ -64,31 +66,44 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
-NO_OF_QUES = 3
 
 @auths.route('/dashboard/')
 @login_required
 def dashboard():
-    questions = Questions.query.filter_by().all()
-    last = math.ceil(len(questions)/NO_OF_QUES)
-    Qpage = request.args.get('Qpage', 1, type=int)
-    questions = questions[(Qpage-1)*NO_OF_QUES : (Qpage-1)*NO_OF_QUES+ NO_OF_QUES]
-    #Pagination Logic
-    #First
-    if (last==1):
-        prev = "#"
-        next = "#"
-    elif (Qpage==1):
-        prev = "#"
-        next = "/dashboard/?Qpage="+ str(Qpage+1)
-    elif(Qpage==last):
-        prev = "/dashboard/?Qpage=" + str(Qpage - 1)
-        next = "#"
-    else:
-        prev = "/dashboard/?Qpage=" + str(Qpage - 1)
-        next = "/dashboard/?Qpage=" + str(Qpage + 1)
+    user = User.query.filter_by(id=current_user.id).first()
+    questions = user.questions
 
-    return render_template('dashboard.html',  questions=questions, prev=prev, next=next)
+    return render_template('dashboard.html',  questions=questions)
+
+@auths.route('/yourQueries')
+@login_required
+def yourQueries():
+    user = User.query.filter_by(id=current_user.id).first()
+    questions = user.questions
+    result = []
+    for ques in questions:
+        dic = {'sno' : ques.id, 'title' : ques.title, 'description' : ques.description, 'posted_on' : ques.posted_on}
+        result.append(dic)
+    questions = result
+    return jsonify(questions)
+
+@auths.route('/yourAnswers')
+@login_required
+def yourAnswers():
+    user = User.query.filter_by(id=current_user.id).first()
+    answers = user.answers
+    result = []
+    for ans in answers:
+        dic = {'sno' : ans.id, 'title' : ans.question.title, 'description' : ans.question.description, 'answer' : ans.ans ,'posted_on' : ans.posted_on}
+        result.append(dic)
+    answers = result
+    return jsonify(answers)
+
+@auths.route('/editProfile', methods=['GET', 'POST'])
+@login_required
+def editProfile():
+    return render_template('editProfile.html');
+
 
 
 

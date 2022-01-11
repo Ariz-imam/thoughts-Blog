@@ -1,0 +1,8 @@
+/* -----------------------------------editor setup classes----------------------------- */
+
+.editor-form{
+    width: -webkit-fill-available;
+}
+.ck.ck-reset{
+    width: -webkit-fill-available;
+}

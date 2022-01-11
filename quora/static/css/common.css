@@ -73,6 +73,26 @@ input[type="radio"] {
     margin: auto;
 }
 
+.post-title{
+    color: #ce8551;
+    text-transform: capitalize;
+}
+.post-subtitle{
+    color: darkgray;
+    text-transform: capitalize;
+}
+.capitalize{
+    text-transform: capitalize;
+}
+
+.content-block{
+    margin-top: 1rem;
+    border-radius: 1rem;
+    padding: 2rem;
+    margin-bottom: 4rem;
+    box-shadow: 1px 2px 8px #888888;
+}
+
 @media (max-width: 768px) {
     .page-container {
         padding: 64px 24px;

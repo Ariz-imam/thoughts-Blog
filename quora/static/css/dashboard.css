@@ -1,11 +1,4 @@
 
-.content-block{
-    margin-top: 1rem;
-    border-radius: 1rem;
-    padding: 2rem;
-    margin-bottom: 4rem;
-    box-shadow: 1px 2px 8px #888888;
-}
 
 .profile-img {
     color: #7d7d7d;
@@ -18,8 +11,9 @@
     line-height: 100px;
 }
 
-.edit-queryOption{
-    text-align: center;
-    background-color: burlywood;
+.list{
+    width: -webkit-fill-available;
+    max-height: 40rem;
+    overflow-y: auto;
 }
 

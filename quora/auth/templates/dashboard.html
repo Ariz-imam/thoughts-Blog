@@ -18,13 +18,13 @@
             <div class="col-md-9">
                 <div class="row no-gutters justify-content-between align-items-end">
                     <div class="profile">
-                        <div class="name">{{current_user.name}}</div>
+                        <div class="name capitalize">{{current_user.name}}</div>
                         <div class="email">{{current_user.email}}</div>
                         <div class="phone">{{current_user.phone}}</div>
-                        <div class="college">{{current_user.college}}</div>
+                        <div class="college capitalize">{{current_user.college}}</div>
                     </div>
                     <div class="edit">
-                        <a href="#" class="edit-profile">Edit Profile</a>
+                        <a href="/editProfile" class="edit-profile">Edit Profile</a>
                     </div>
                 </div>
             </div>
@@ -40,7 +40,9 @@
             <button class="btn btn-primary"> Ask Your Query</button>
           </a>
           
-          <a href="/logout">  <button class="btn btn-primary"> Answer Queries</button></a>
+          <a href="/writeAnswer">  
+            <button class="btn btn-primary"> Answer Queries</button>
+          </a>
         </div>
       </div>
 
@@ -61,39 +63,21 @@
       <div class="mx-auto content-block">
         <h1>Edit Queries</h1>
         <div class="row justify-content-between p-3">
-          <a href="#" class="col-md-6 btn btn-warning">Your Queries</a>
-          <a href="#" class="col-md-6 btn btn-warning">Your Answers</a>
-          <table class="table">
-             <thead>
-               <tr>
-                 <th>Sno</th>
-                 <th>Title</th>
-                 <th>Date</th>
-                 <th>Edit</th>
-                 <th>Delete</th>
-               </tr>
-             </thead>
-             <tbody>
-          
-               {% for question in questions %}
-               <tr>
-                 <td>{{question.sno}}</td>
-                 <td>{{question.title}}</td>
-                 <td>{{question.posted_on}}</td>
-                 <td><a href="/edit/{{question.sno}}"><button class="btn btn-dark" >Edit</button></a></td>
-                 <td><a href="/delete/{{question.sno}}"><button class="btn btn-dark">Delete</button></a></td>
-               </tr>
-               
-          
-               {% endfor %}
-          
-             </tbody>
-          </table>  
-        </div>
-
-        <div class="row justify-content-between p-3">    
-          <a class="btn btn-primary" href="{{prev}}"> &larr;Previous</a>
-          <a class="btn btn-primary " href="{{next}}">Next&rarr;</a>
+          <a href="/yourQueries" class="col-md-6 btn btn-warning" id="yourQueries">Your Queries</a>
+          <a href="/yourAnswers" class="col-md-6 btn btn-warning" id="yourAnswers">Your Answers</a>
+          <ul class="list-group list" id="list">
+            {% for question in questions %}
+            <li class="list-group-item">
+                <h3 id="queryDesc">{{question.description|safe}}</h3>
+                <h5 id="queryTitle" class="text-muted">{{question.title|safe}}</h5>  
+                <em class="">{{question.posted_on}}</em>
+                <div class="float-right">
+                  <a href="/edit/ques/{{question.id}}"  class="btn rounded-circle"><i class="far fa-edit"></i></a>   
+                  <a href="/delete/ques/{{question.id}}"  class="btn  rounded-circle"><i class="fas fa-trash-alt"></i></a>
+                </div>
+            </li>
+            {% endfor %}
+          </ul> 
         </div>
 
       </div>
@@ -101,5 +85,5 @@
       
     </div>
 
-
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
     {% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    edit
+{% endblock title %}
+
+{% block body %}
+<div class="my-profile page-container title-content">
+
+    <div class="mx-auto content-block">
+        <h1>Update Query</h1>
+
+            <form id="editQquery-form" class="form" role="form" method="post" action="/edit/ques/{{question.id}}">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input class="form-control" name="title" value="{{question.title|safe}}" placeholder="Query Title" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="editdesc">Description</label>
+                    <textarea class="form-control" name="updatedesc" id="editdesc" rows="4" placeholder="Description of Query" required>{{question.description|safe}}</textarea>
+                </div>
+
+                <button type="submit" class="btn btn-block btn-primary">Update</button>
+            
+            </form>
+
+    </div>
+    
+    
+</div>
+
+<script>
+   let id = Number('{{question.id}}');
+</script>
+<script src=" {{ url_for('static', filename='js/editQuery.js') }} "></script> 
+{% endblock body %}

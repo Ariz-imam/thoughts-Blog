@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Queries
+{% endblock title %}
+
+{% block body %}
+<div class="my-profile page-container title-content">
+
+    <div class="mx-auto content-block">
+      <h1 class="heading">Queries</h1>
+      <div class="row justify-content-between p-3">
+        <ul class="list-group">
+            {% for question in questions %}
+            <li class="list-group-item">
+                <a href="/answer/ques={{question.id}}">
+                    <h3 class="post-title">{{question.description|safe}}</h3>
+                </a>
+                <h4 class="post-subtitle">{{question.title|safe}}</h4>
+                <div class="row justify-content-between p-3">
+                  <span class="post-meta">
+                      Posted by <a href="#">{{question.author.name}}</a> on {{question.posted_on}}
+                  </span>
+                  <a href="/answer/ques={{question.id}}" class="btn btn-sm btn-outline-secondary">Write Your Answer</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>  
+      </div>
+
+      <div class="row justify-content-between p-3 mt-2">    
+        <a class="btn btn-primary" href="{{prev}}"> &larr;Previous</a>
+        <a class="btn btn-primary " href="{{next}}">Next&rarr;</a>
+      </div>
+
+    </div>
+    
+    
+</div>
+{% endblock body %}

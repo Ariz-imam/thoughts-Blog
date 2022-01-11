@@ -2,11 +2,13 @@ from flask import Flask
 import secrets
 from flask_mail import Mail
 from flask_login import LoginManager
+from flask_marshmallow import Marshmallow
 
 login_manager = LoginManager()
 
 app = Flask(__name__)
 mail = Mail(app)
+marsh = Marshmallow(app)
 login_manager.init_app(app)
 
 

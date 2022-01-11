@@ -1,0 +1,54 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Queries
+{% endblock title %}
+
+{% block body %}
+<link rel="stylesheet" href=" {{ url_for('static', filename='css/query.css') }} ">
+<div class="my-profile page-container title-content">
+
+    <div class="mx-auto content-block">
+      <h1 class="capitalize">{{question.description|safe}}</h1>
+      <strong class="text-muted">#{{question.title|safe}}</strong>
+      <hr/>
+      <div class="row justify-content-between p-3">
+          <ul class="list-group col-12 mb-4">
+              <h4>Answers</h4>
+              {% if answers|length > 0 %}
+                {% for answer in answers %}
+                <span>Answer by <a href="/dashboard/{{answer.author.id}}">{{answer.author.name}}</a> on {{answer.posted_on}}</span> 
+                <li class="list-group-item">
+                    <p id="paragraph" runat="server">{{ answer.ans|safe }}</p>
+                </li>      
+                {% endfor %}
+              {% else %}
+                <li class="list-group-item">
+                    <h3 class="text-center text-muted">be the first to answer this question</h3>
+                </li>     
+              {% endif %}    
+          </ul>
+          <hr/>
+          <form action="/answer/ques={{question.id}}" id="answer-form" class="editor-form mt-2" method="post">
+              
+              <div class="form-group">
+                  <label for="editor"><h4>Your Answer</h4></label>
+                  <textarea  id="editor" placeholder="Write your answer here.." name="answer">
+                  </textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Submit</button>
+
+          </form>
+      </div>
+
+    </div>
+    
+    
+</div>
+
+<script>
+   let id = Number('{{question.id}}');
+</script>
+<script src=" {{ url_for('static', filename='js/query.js') }} "></script> 
+{% endblock body %}

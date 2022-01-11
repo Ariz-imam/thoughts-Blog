@@ -1,0 +1,41 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    edit
+{% endblock title %}
+
+{% block body %}
+<link rel="stylesheet" href=" {{ url_for('static', filename='css/query.css') }} ">
+<div class="my-profile page-container title-content">
+
+    <div class="mx-auto content-block">
+      <h1 class="capitalize">{{question.description|safe}}</h1>
+      <strong class="text-muted">#{{question.title|safe}}</strong>
+      <hr/>
+      <div class="row justify-content-between p-3">
+          <span>Answer by <a href="/dashboard/{{answer.author.id}}">{{answer.author.name}}</a> on {{answer.posted_on}}</span> 
+          <hr/>
+          <form action="/edit/ans/{{answer.id}}" id="editAnswer-form" class="editor-form mt-2" method="post">
+              
+              <div class="form-group">
+                  <label for="editAnswer"><h4>Your Answer</h4></label>
+                  <textarea  id="editAnswer" placeholder="Write your answer here.." name="answer">
+                  {{answer.ans|safe}}
+                  </textarea>
+              </div>
+
+              <button type="submit" class="btn btn-sm btn-outline-dark float-right">Update</button>
+
+          </form>
+      </div>
+
+    </div>
+    
+    
+</div>
+
+<script>
+   let id = Number('{{answer.id}}');
+</script>
+<script src=" {{ url_for('static', filename='js/editAnswer.js') }} "></script> 
+{% endblock body %}
