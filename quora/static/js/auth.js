@@ -57,6 +57,59 @@ window.addEventListener('load', function(){
         event.preventDefault();
     });
 
+    resetRequest_form = document.getElementById('resetRequest-form');
+    
+    resetRequest_form.addEventListener('submit', function(event){
+        httpRequest = new XMLHttpRequest(); // ajax object
+
+        form_data = new FormData(resetRequest_form);
+
+        httpRequest.addEventListener('load', resetRequestResult); // when request complete successfully
+
+        httpRequest.addEventListener('error', errorResult); // when request terminates with error
+
+        httpRequest.open('POST', '/reset_request');
+
+        httpRequest.send(form_data);
+        document.getElementById('loading').style.display = 'block';
+        event.preventDefault();
+    });
+
+    resetPassword_form = document.getElementById('resetPassword-form');
+    
+    resetPassword_form.addEventListener('submit', function(event){
+        httpRequest = new XMLHttpRequest(); // ajax object
+
+        form_data = new FormData(resetPassword_form);
+
+        httpRequest.addEventListener('load', resetPasswordResult); // when request complete successfully
+
+        httpRequest.addEventListener('error', errorResult); // when request terminates with error
+
+        httpRequest.open('POST', '/reset_password');
+
+        httpRequest.send(form_data);
+        document.getElementById('loading').style.display = 'block';
+        event.preventDefault();
+    });
+
+    delete_account = document.getElementById('delete-account-button')
+
+    delete_account.addEventListener('click', function(event){
+        httpRequest = new XMLHttpRequest(); // ajax object
+
+        httpRequest.addEventListener('load', deleteResult); // on load
+
+        httpRequest.addEventListener('error', errorResult); // on error
+
+        httpRequest.open('GET', `/delete_account/${user_id}`);
+
+        httpRequest.send();
+
+        document.getElementById('loading').style.display = 'block';
+        event.preventDefault();
+    })
+
 });
 
 let queryResult = function(event){
@@ -83,6 +136,7 @@ let signupResult = function(event){
         location.reload();
     }else{
         alert(response.message);
+        location.reload();
     }
 }
 
@@ -93,9 +147,52 @@ let loginResult = function(event){
 
     if(response.success){
         alert(response.message);
-        window.location.href = "/dashboard";
+        location.reload();
     }else{
         alert(response.message);
+        location.reload();
+    }
+}
+
+let resetRequestResult = function(event){
+    document.getElementById('loading').style.display = 'none';
+
+    let response = JSON.parse(event.target.responseText);
+
+    if (response.success){
+        alert(response.message);
+        window.location.href = "/";
+    }else{
+        alert(response.message);
+        location.reload();
+    }
+};
+
+let resetPasswordResult = function(event){
+    document.getElementById('loading').style.display = 'none';
+
+    let response = JSON.parse(event.target.responseText);
+
+    if (response.success){
+        alert(response.message);
+        window.location.href = "/dashboard/";
+    }else{
+        alert(response.message);
+        window.location.href = "#resetPassword-form";
+    }
+};
+
+let deleteResult = function(event){
+    document.getElementById('loading').style.display = 'none';
+
+    let response = JSON.parse(event.target.responseText);
+
+    if(response.success){
+        alert(response.message);
+        window.location.href = '/';
+    }else{
+        alert(response.message);
+        location.reload();
     }
 }
 

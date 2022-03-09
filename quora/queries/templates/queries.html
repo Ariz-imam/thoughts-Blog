@@ -19,7 +19,7 @@
                 <h4 class="post-subtitle">{{question.title|safe}}</h4>
                 <div class="row justify-content-between p-3">
                   <span class="post-meta">
-                      Posted by <a href="#">{{question.author.name}}</a> on {{question.posted_on}}
+                      Posted by <a href="/dashboard/{{question.author.id}}">{{question.author.name}}</a> on {{question.posted_on}}
                   </span>
                   <a href="/answer/ques={{question.id}}" class="btn btn-sm btn-outline-secondary">Write Your Answer</a>
                 </div>
@@ -28,9 +28,18 @@
         </ul>  
       </div>
 
-      <div class="row justify-content-between p-3 mt-2">    
-        <a class="btn btn-primary" href="{{prev}}"> &larr;Previous</a>
-        <a class="btn btn-primary " href="{{next}}">Next&rarr;</a>
+      <div class="row justify-content-between p-3 mt-2"> 
+        {% if prev == "#" %} 
+          <a class="btn btn-primary disabled" href="{{prev}}"> &larr;Previous</a>
+        {% else %}  
+          <a class="btn btn-primary" href="{{prev}}"> &larr;Previous</a>
+        {% endif %}
+
+        {% if next == "#" %}
+          <a class="btn btn-primary disabled" href="{{next}}">Next&rarr;</a>
+        {% else %}
+          <a class="btn btn-primary " href="{{next}}">Next&rarr;</a>
+        {% endif %}
       </div>
 
     </div>

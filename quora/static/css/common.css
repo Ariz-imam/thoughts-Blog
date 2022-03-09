@@ -1,7 +1,13 @@
 * {
     box-sizing: border-box;
     font-family: 'Open Sans', sans-serif;
+    scroll-behavior: smooth;
 }
+
+a:hover{
+    text-decoration:none;
+    color:cadetblue;
+} 
 
 body {
     color: #373737;
@@ -74,8 +80,12 @@ input[type="radio"] {
 }
 
 .post-title{
-    color: #ce8551;
+    color: #666666;
     text-transform: capitalize;
+}
+.post-title:hover{
+    text-decoration:none;
+    color:cadetblue;
 }
 .post-subtitle{
     color: darkgray;
@@ -85,6 +95,10 @@ input[type="radio"] {
     text-transform: capitalize;
 }
 
+.text-align-center{
+    text-align: center;
+}
+
 .content-block{
     margin-top: 1rem;
     border-radius: 1rem;
@@ -92,6 +106,15 @@ input[type="radio"] {
     margin-bottom: 4rem;
     box-shadow: 1px 2px 8px #888888;
 }
+
+.nav-element1 li{
+    margin: 0rem 1rem;
+}
+
+.nav-element1 li a {
+    font-weight: bolder;
+}
+
 
 @media (max-width: 768px) {
     .page-container {
@@ -120,6 +143,11 @@ input[type="radio"] {
 
 /* Login Modal */
 #login-modal .modal-dialog {
+    width: 350px;
+    margin: auto;
+}
+
+#resetRequest .modal-dialog{
     width: 350px;
     margin: auto;
 }
@@ -169,7 +197,7 @@ input[type="radio"] {
 
 /* Footer */
 .footer {
-    background-color: #333333;
+    background-color: #f0f1ea;
     font-size: 13px;
 }
 

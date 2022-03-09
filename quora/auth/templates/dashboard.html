@@ -17,13 +17,15 @@
             </div>
             <div class="col-md-9">
                 <div class="row no-gutters justify-content-between align-items-end">
-                    <div class="profile">
-                        <div class="name capitalize">{{current_user.name}}</div>
-                        <div class="email">{{current_user.email}}</div>
-                        <div class="phone">{{current_user.phone}}</div>
-                        <div class="college capitalize">{{current_user.college}}</div>
+                    <div class="col-md-9 profile">
+                        <div class="row name capitalize">Name  :  {{current_user.name}}</div>
+                        <div class="row email">Email  :  {{current_user.email}}</div>
+                        <div class="row phone">Phone  :  {{current_user.phone}}</div>
+                        <div class="row college capitalize">Profession  :  {{current_user.profession}}</div>
+                        <div class="row city capitalize">City  :  {{current_user.city}}</div>
+                        <div class="row country capitalize">Country  :  {{current_user.country}}</div>
                     </div>
-                    <div class="edit">
+                    <div class="col-md-3 edit">
                         <a href="/editProfile" class="edit-profile">Edit Profile</a>
                     </div>
                 </div>
@@ -47,18 +49,6 @@
       </div>
 
       <hr/>
-      <div class="mx-auto content-block">
-        <h1>Upload A File</h1>
-  
-        <div class="row justify-content-between p-3">
-          <form action="/uploader" method="post" enctype="multipart/form-data">
-             <input type="file" name="file1">
-             <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
-        </div>
-      </div>
-
-      <hr/>
 
       <div class="mx-auto content-block">
         <h1>Edit Queries</h1>
@@ -68,7 +58,9 @@
           <ul class="list-group list" id="list">
             {% for question in questions %}
             <li class="list-group-item">
-                <h3 id="queryDesc">{{question.description|safe}}</h3>
+                <a href="/answer/ques={{question.id}}">
+                  <h3 class="post-title" id="queryDesc">{{question.description|safe}}</h3>
+                </a>
                 <h5 id="queryTitle" class="text-muted">{{question.title|safe}}</h5>  
                 <em class="">{{question.posted_on}}</em>
                 <div class="float-right">

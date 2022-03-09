@@ -1,10 +1,21 @@
 import secrets,  os, math
 from PIL import Image
-from flask import render_template, request, flash, session, redirect, url_for, Blueprint, jsonify
+from flask import render_template, request, flash, safe_join, session, redirect, url_for, Blueprint, jsonify
 from flask_login import login_required, current_user
-from quora.models import Answers, Questions, db
+from quora.models import Answers, Questions, User, db
+from quora import mail
+from bs4 import BeautifulSoup
 
 query = Blueprint('queries', __name__, template_folder='templates')
+
+def sanitize_html(value):
+
+    soup = BeautifulSoup(value)
+
+    for tag in soup.findAll(True):
+        tag.hidden = True
+
+    return str(soup.renderContents())
 
 @query.route('/askQuery', methods=['GET', 'POST'])
 @login_required
@@ -30,7 +41,6 @@ def askQuery():
 
 NO_OF_QUES = 5
 @query.route('/writeAnswer/', methods=['GET', 'POST'])
-@login_required
 def writeAnswer():
     questions = Questions.query.filter_by().all()
     last = math.ceil(len(questions)/NO_OF_QUES)
@@ -54,13 +64,19 @@ def writeAnswer():
     return render_template('queries.html',  questions=questions, prev=prev, next=next)
 
 @query.route('/answer/ques=<int:id>', methods=['GET', 'POST'])
-@login_required
 def answer(id):
     if request.method == 'POST':
         ans = request.form['answer']
         answer = Answers(ans_of=id, ans=ans, posted_by=current_user.id)
         db.session.add(answer)
         db.session.commit()
+        question = Questions.query.filter_by(id=id).first()
+        mail.send_message('Your Query has been answered by '+current_user.name,
+                          sender=current_user.email,
+                          recipients = [question.author.email],
+                          body = 'Your Question : \n'+str(sanitize_html(question.description)) + "\n\n" + 'Answer : \n'+str(sanitize_html(ans))+
+                          "\n\nFrom\n"+current_user.name
+                          )
         response = {'success' : True, 'message' : 'Your answer for this question is submited successfully'}
         return jsonify(response)
 
@@ -120,5 +136,11 @@ def deleteAnswer(id):
     db.session.commit()
     return redirect(url_for('auth.dashboard'))
 
+@query.route('/dashboard/<int:id>')
+def viewProfile(id):
+    if current_user.is_authenticated and id == current_user.id:
+        return redirect(url_for('auth.dashboard'))
+    user = User.query.filter_by(id = id).first()
+    return render_template('viewProfile.html', user=user)
 
 

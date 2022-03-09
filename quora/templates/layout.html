@@ -11,6 +11,9 @@
     <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     
     <!-- Custom fonts for this template -->
+    <link href="{{ url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
     <link href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap" rel="stylesheet" />
     
@@ -22,7 +25,7 @@
 </head>
 
   <body>
-
+    
     <!-- Navigation -->
     <div class="header sticky-top">
     <nav class="navbar navbar-expand-md navbar-light">
@@ -34,11 +37,19 @@
         </button>
         
         <div class="collapse navbar-collapse justify-content-end align-item-center" id="my-navbar">
-            <ul class="navbar-nav">
-
+            <ul class="navbar-nav nav-element1">
+              <li class="nav-item">
+                <a class="nav-link" href="/#header">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/#about">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/#contact">Contact</a>
+              </li>
             </ul>
             
-            <ul class="navbar-nav align-item-center">
+            <ul class="navbar-nav nav-element2 align-item-center">
 
                 <li class="nav-item align-self-center">
                     <form id="search-form" action="#" method="GET">
@@ -95,7 +106,7 @@
                         <i class="fas fa-sign-in-alt"></i>Login
                     </a>
                 </li>
-                    
+                
                 {% endif %}
         
            
@@ -107,45 +118,44 @@
 <div id="loading">
 </div>
 
-
 {% include 'modal.html' %}
+
+{% include 'messages.html'%}
 
 {% block body %} {% endblock %}
 
 
- <hr>
+ 
     <!-- Footer -->
-    <footer>
-      <div class="container">
+
+    <footer class="footer">
+      <div class="footer-container">
         <div class="row">
           <div class="col-lg-8 col-md-10 mx-auto">
             <ul class="list-inline text-center">
               <li class="list-inline-item">
                 <a href="#" target="_blank">
-                  <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                  <span class="fa-stack fa-lg post-title">
+                    <i class="fa-brands fa-twitter fa-lg"></i>
                   </span>
                 </a>
               </li>
               <li class="list-inline-item">
-                <a href="#" target="_blank">
-                  <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                <a href="https://www.linkedin.com/company/query-just-ask/" target="_blank">
+                  <span class="fa-stack fa-lg post-title">
+                    <i class="fa-brands fa-linkedin fa-lg"></i>
                   </span>
                 </a>
               </li>
               <li class="list-inline-item">
-                <a href="#" target="_blank">
-                  <span class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                <a href="https://github.com/faisal1025/thoughts-Blog" target="_blank">
+                  <span class="fa-stack fa-lg post-title">
+                    <i class="fa-brands fa-github fa-lg"></i>
                   </span>
                 </a>
               </li>
             </ul>
-            <p class="copyright text-muted">Copyright &copy; TheCodingThunder 2018</p>
+            <p class="footer-copyright text-muted">Copyright &copy; Query 2022</p>
           </div>
         </div>
       </div>
@@ -154,8 +164,14 @@
     <!-- Bootstrap core JavaScript -->
     <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="https://kit.fontawesome.com/162c1e58c0.js" crossorigin="anonymous"></script>
 
     <!-- Custom scripts for this template -->
+    {% if current_user.is_authenticated %}
+      <script>
+        let user_id = Number('{{current_user.id}}');
+      </script>
+    {% endif %}
     <script src="{{ url_for('static', filename='js/clean-blog.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
 

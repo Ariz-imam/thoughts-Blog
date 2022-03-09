@@ -1,10 +1,10 @@
+from mimetypes import init
 from flask_sqlalchemy import SQLAlchemy
 import os
 from datetime import datetime
-
-from sqlalchemy.orm import backref, composite
-from quora import app, marsh
+from quora import app
 from dotenv import load_dotenv
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from quora import login_manager
 from flask_login import UserMixin
 
@@ -28,15 +28,6 @@ class Contacts(db.Model):
     date = db.Column(db.String(12), nullable=True)
     email = db.Column(db.String(20), nullable=False)
 
-
-class Posts(db.Model):
-    sno = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(80), nullable=False)
-    slug = db.Column(db.String(21), nullable=False)
-    content = db.Column(db.String(120), nullable=False)
-    tagline = db.Column(db.String(120), nullable=False)
-    date = db.Column(db.String(12), nullable=True)
-    img_file = db.Column(db.String(12), nullable=True)
 
 class Answers(db.Model):
     __tablename__ = "answers"
@@ -69,6 +60,7 @@ login_manager.login_message_category = "warning"
 
 
 class User(db.Model, UserMixin):
+
     __tablename__ = "users"
         
     id = db.Column('user_id', db.Integer, primary_key=True, nullable=False)
@@ -77,11 +69,25 @@ class User(db.Model, UserMixin):
     email = db.Column('email', db.String(255), nullable=False, unique=True)
     password = db.Column('pass', db.String(255), nullable = False)
     gender = db.Column('gender', db.String(255), nullable = False)
-    college = db.Column('college', db.String(255), nullable = False)
+    profession = db.Column('profession', db.String(255), nullable = False)
+    city = db.Column('city', db.String(255), nullable = True)
+    country = db.Column('country', db.String(255), nullable = True)
     pic = db.Column('pic', db.LargeBinary, nullable = True)
     questions = db.relationship('Questions', backref='author', cascade="all, delete-orphan", lazy=True)
     answers = db.relationship('Answers', backref='author', cascade="all, delete-orphan", lazy=True)
 
+    def get_reset_token(self, expires_sec=1800):
+        s = Serializer(app.config['SECRET_KEY'], expires_sec)
+        return s.dumps({'user_id': self.id}).decode('utf-8')
+
+    @staticmethod
+    def verify_reset_token(token):
+        s = Serializer(app.config['SECRET_KEY'])
+        try:
+            user_id = s.loads(token)['user_id']
+        except:
+            return None
+        return User.query.filter_by(id=user_id).first()
 
 
 

@@ -9,7 +9,7 @@ window.addEventListener('load', function(){
 
         httpRequest.addEventListener('error', on_error);
 
-        httpRequest.open('GET', '/yourQueries', true);
+        httpRequest.open('GET', `/viewProfileGetQueries/${id}`, true);
 
         httpRequest.send();
 
@@ -26,7 +26,7 @@ window.addEventListener('load', function(){
 
         httpRequest.addEventListener('error', on_error);
 
-        httpRequest.open('GET', '/yourAnswers', true);
+        httpRequest.open('GET', `/viewProfileGetAnswers/${id}`, true);
 
         httpRequest.send();
 
@@ -43,20 +43,15 @@ let getQueries = function(event){
     let list = document.getElementById('list');
 
     resArr = JSON.parse(event.target.responseText);
-    //console.log(resArr);
+    console.log(resArr);
     let str = "";
     for (let response of resArr){
-            //console.log(response.id);
             str += `<li class="list-group-item">
                         <a href="/answer/ques=${response.id}">
                             <h3 class="post-title">${response.description}</h3>
                         </a>
                         <h5 class="text-muted">${response.title}</h5>  
                         <em class="">${response.posted_on.slice(0, 16)}</em>
-                        <div class="float-right">
-                        <a href="/edit/ques/${response.id}" class="btn rounded-circle"><i class="far fa-edit"></i></a>
-                        <a href="/delete/ques/${response.id}"  class="btn  rounded-circle"><i class="fas fa-trash-alt"></i></a>
-                        </div>
                     </li>`;
             list.innerHTML = str;
     }
@@ -81,10 +76,6 @@ let getAnswers = function(event){
                     <em class="">${response.posted_on.slice(0, 16)}</em>
                     <hr/>
                     ${response.answer}
-                    <div class="float-right">
-                    <a href="/edit/ans/${response.id}" class="btn  rounded-circle"><i class="far fa-edit"></i></a>
-                    <a href="/delete/ans/${response.id}" class="btn  rounded-circle"><i class="fas fa-trash-alt"></i></a>
-                    </div>
                 </li>`;
         list.innerHTML = str;
     }
