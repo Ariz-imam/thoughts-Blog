@@ -18,7 +18,7 @@
               {% if answers|length > 0 %}
                 {% for answer in answers %}
                 <span>Answer by <a href="/dashboard/{{answer.author.id}}">{{answer.author.name}}</a> on {{answer.posted_on}}</span> 
-                <li class="list-group-item">
+                <li class="list-group-item mb-4">
                     <p id="paragraph" runat="server">{{ answer.ans|safe }}</p>
                 </li>      
                 {% endfor %}
@@ -37,7 +37,13 @@
                   </textarea>
               </div>
 
-              <button type="submit" class="btn btn-primary">Submit</button>
+              {% if current_user.is_authenticated %}
+                <button type="submit" class="btn btn-primary">Submit</button>    
+                {% else %}
+                <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#login-modal">
+                    Submit        
+                </a>
+              {% endif %}
 
           </form>
       </div>

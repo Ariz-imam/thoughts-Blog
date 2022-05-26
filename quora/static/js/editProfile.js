@@ -1,26 +1,24 @@
+window.addEventListener('load', function(){
 
-window.onload = () => {
+    let update_form = document.getElementById("update-form");
 
-    editAnswer_form = document.getElementById('editAnswer-form');
-    editAnswer_form.addEventListener('submit', function(event){
-        httpRequest = new XMLHttpRequest(); // ajax object
-     
-        form_data = new FormData(editAnswer_form);
-        
-        httpRequest.addEventListener('load', editResult); // when request complete successfully
-        
-        httpRequest.addEventListener('error', on_error); // when request terminates with error
-        
-        httpRequest.open('POST', `/edit/ans/${id}`);
-        
+    update_form.addEventListener('submit', function(event){
+        let httpRequest = new XMLHttpRequest();
+
+        let form_data = new FormData(update_form);
+
+        httpRequest.addEventListener('load', editResult);
+
+        httpRequest.addEventListener('error', on_error);
+
+        httpRequest.open('POST', '/editProfile');
+
         httpRequest.send(form_data);
+
         document.getElementById('loading').style.display = 'block';
         event.preventDefault();
     });
-
-}
-
-    
+});
 
 let editResult = event =>{
     document.getElementById('loading').style.display = 'none';
@@ -36,9 +34,7 @@ let editResult = event =>{
     }
 };
 
-
 let on_error = function(){
     alert('Ooops! SomeThing went wrong');
     location.reload();
 };
-

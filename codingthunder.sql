@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.2
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 05, 2018 at 12:06 PM
--- Server version: 10.1.34-MariaDB
--- PHP Version: 7.1.19
+-- Generation Time: Mar 09, 2022 at 10:40 AM
+-- Server version: 10.4.19-MariaDB
+-- PHP Version: 7.3.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -25,6 +24,28 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `answers`
+--
+
+CREATE TABLE `answers` (
+  `id` int(11) NOT NULL,
+  `ans_of` int(11) NOT NULL,
+  `ans` longtext NOT NULL,
+  `post_by` int(11) NOT NULL,
+  `post_on` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `answers`
+--
+
+INSERT INTO `answers` (`id`, `ans_of`, `ans`, `post_by`, `post_on`) VALUES
+(15, 1, '<p><strong>We could add margin from all direction as well as from any specific direction:</strong></p><ol><li><strong>From all direction&nbsp;</strong></li></ol><ul><li><strong>m-1, m-2, m-3, m-4 or m-auto, mx-auto</strong></li></ul><ol><li><strong>From specific direction</strong></li></ol><ul><li><strong>mt-1, mt-2 …so on till mt-5 </strong>For margin from top</li><li><strong>mb-1, mb-2, …..so on till mb-5 </strong>For margin from bottom</li><li><strong>ml-1, ml-2 …. so on till ml-5 </strong>For margin from left</li><li><strong>mr-1, mr-2, ….so on till mr-5 </strong>For margin from right</li></ul>', 4, '2021-12-06'),
+(33, 17, '<p>You should learn github from code with harry youtube channel.</p>', 4, '2022-03-08');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `contacts`
 --
 
@@ -33,7 +54,7 @@ CREATE TABLE `contacts` (
   `name` text NOT NULL,
   `phone_num` varchar(50) NOT NULL,
   `msg` text NOT NULL,
-  `date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `date` datetime DEFAULT current_timestamp(),
   `email` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -42,45 +63,74 @@ CREATE TABLE `contacts` (
 --
 
 INSERT INTO `contacts` (`sno`, `name`, `phone_num`, `msg`, `date`, `email`) VALUES
-(1, 'first post', '123456789', 'first post', '2018-07-29 11:36:23', 'firstpost@gmail.com'),
-(2, 'mera naam', '4434343434', 'Bhai please send ho jaa database mei', NULL, 'meraemail@gmail.com'),
-(3, 'mera naam', '4434343434', 'Bhai please send ho jaa database mei', '2018-07-29 11:44:51', 'meraemail@gmail.com'),
-(4, 'Bithika Pal', 'dfdf', 'posting now', '2018-07-29 15:46:28', 'bithikapddal@iitkgp.ac.in'),
-(5, 'dfdf', 'dsffdfs', 'sd mail send please', '2018-07-29 17:19:41', 'dfdf@df.dfd'),
-(6, 'dfdf', 'dsffdfs', 'sd mail send please', '2018-07-29 17:21:58', 'dfdf@df.dfd'),
-(7, 'dfdf', 'dsffdfs', 'sd mail send please', '2018-07-29 17:22:33', 'dfdf@df.dfd');
+(24, 'Faisal Azmi', '08271406688', 'kuch v', '2022-02-20 23:18:07', 'faisalprofessional1@gmail.com'),
+(25, 'Faisal Azmi', '08271406688', 'Ajax request check.', '2022-02-20 23:34:13', 'faisalprofessional1@gmail.com'),
+(26, 'Faisal Azmi', '08271406688', 'kuch v', '2022-02-20 23:37:19', 'faisalprofessional1@gmail.com'),
+(27, 'Faisal Azmi', '08271406688', 'Ajax Check up', '2022-02-20 23:43:08', 'faisalprofessional1@gmail.com');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `posts`
+-- Table structure for table `questions`
 --
 
-CREATE TABLE `posts` (
-  `sno` int(11) NOT NULL,
-  `title` text NOT NULL,
-  `tagline` text NOT NULL,
-  `slug` varchar(25) NOT NULL,
-  `content` text NOT NULL,
-  `img_file` varchar(12) NOT NULL,
-  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `questions` (
+  `id` int(11) NOT NULL,
+  `ques_title` varchar(255) NOT NULL,
+  `ques_desc` varchar(500) NOT NULL,
+  `post_on` date DEFAULT NULL,
+  `post_by` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `posts`
+-- Dumping data for table `questions`
 --
 
-INSERT INTO `posts` (`sno`, `title`, `tagline`, `slug`, `content`, `img_file`, `date`) VALUES
-(1, 'Lets learn about stock market', 'post.tagline', 'first-post', 'The stock (also capital or harry stock) of a corporation is constituted of the equity stock of its owners. A single share of the stock represents fractional ownership of the corporation in proportion to the total number of shares. In liquidation, the stock represents the residual assets of the company that would be due to stockholders after discharge of all senior claims such as secured and unsecured debt.[1] Stockholders\' equity cannot be withdrawn from the company in a way that is intended to be detrimental to the company\'s creditors', 'home-bg.jpg', '2018-08-05 13:06:07'),
-(2, 'This is second post', 'coolest post ever', 'second-post', 'A template contains variables and/or expressions, which get replaced with values when a template is rendered; and tags, which control the logic of the template. The template syntax is heavily inspired by Django and Python.\r\n\r\nBelow is a minimal template that illustrates a few basics using the default Jinja configuration. We will cover the details later in this document:', 'about-bg.jpg', '2018-08-01 21:04:07'),
-(4, 'Variables4', 'fourth tagline', 'fourth-post', 'Beside filters, there are also so-called “tests” available. Tests can be used to test a variable against a common expression. To test a variable or expression, you add is plus the name of the test after the variable. For example, to find out if a variable is defined, you can do name is defined, which will then return true or false depending on whether name is defined in the current template context.\r\n\r\nTests can accept arguments, too. If the test only takes one argument, you can leave out the parentheses. For example, the following two expressions do the same thing:\r\n\r\n{% if loop.index is divisibleby 3 %}\r\n{% if loop.index is divisibleby(3) %}\r\nThe List of Builtin Tests below describes all the builtin tests.', '', '2018-08-01 21:08:58'),
-(5, 'Whitespace Control', 'tagline', 'slug-next', 'In the default configuration:\r\n\r\na single trailing newline is stripped if present\r\nother whitespace (spaces, tabs, newlines etc.) is returned unchanged\r\nIf an application configures Jinja to trim_blocks, the first newline after a template tag is removed automatically (like in PHP). The lstrip_blocks option can also be set to strip tabs and spaces from the beginning of a line to the start of a block. (Nothing will be stripped if there are other characters before the start of the block.)\r\n\r\nWith both trim_blocks and lstrip_blocks enabled, you can put block tags on their own lines, and the entire block line will be removed when rendered, preserving the whitespace of the contents. For example, without the trim_blocks and lstrip_blocks options, this template:', '', '2018-08-01 21:09:50'),
-(7, 'List Comprehension, Dictionary Comprehension And Generator Comprehension | Advanced Python in Hindi', 'this is new post tagline', 'new-post', 'sfsf', 'sdf', '2018-08-04 17:20:16'),
-(8, 'List Comprehension, Dictionary Comprehension And Generator Comprehension | Advanced Python in Hindi', 'dsfdfs', 'ddddddddd', 'sdfdsfd', 'fd', '2018-08-04 17:22:28');
+INSERT INTO `questions` (`id`, `ques_title`, `ques_desc`, `post_on`, `post_by`) VALUES
+(1, 'Web Development', '<p>What is the class to add margin through bootstrap?</p>', '2021-12-05', 4),
+(9, 'Travelling ', '<p>What is the most beautiful place to visit in winter in New York??</p>', '2021-12-09', 4),
+(12, 'Cricket game', 'Who is the captain of Pakistan team?? and how many world cups are being won by pakistan team??', '2021-12-09', 4),
+(13, 'Study', '<p>How to practice for coding interviews? What subjects are necessary??</p>', '2022-01-02', 4),
+(17, 'Learning', '<p>How to learn github in 1 week?</p>', '2022-03-08', 12);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `user_id` int(11) NOT NULL,
+  `fullname` varchar(255) NOT NULL,
+  `phone` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `pass` varchar(255) NOT NULL,
+  `profession` varchar(255) NOT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `gender` varchar(255) NOT NULL,
+  `pic` longblob DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`user_id`, `fullname`, `phone`, `email`, `pass`, `profession`, `city`, `country`, `gender`, `pic`) VALUES
+(4, 'Faisal Azmi', 2147483647, 'faisalprofessional1@gmail.com', '$5$rounds=535000$N0QMx7LygBcBpeBe$xxQZz6E6E.y6IploQhVIRiJPSOXLF.0upYhFnAAif/B', 'Student', 'Patna', 'India', 'male', NULL),
+(12, 'Ariz Imam', 2147483647, 'ariz.imam585@gmail.com', '$5$rounds=535000$eVT5sjhxqZgNGHmO$ylMkxYXoUxbcCs0Vni5mTkTtbpiu1DS8uvEPtwl5f9C', 'student', NULL, NULL, 'male', NULL);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `answers`
+--
+ALTER TABLE `answers`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `ans_of` (`ans_of`),
+  ADD KEY `post_by` (`post_by`);
 
 --
 -- Indexes for table `contacts`
@@ -89,26 +139,63 @@ ALTER TABLE `contacts`
   ADD PRIMARY KEY (`sno`);
 
 --
--- Indexes for table `posts`
+-- Indexes for table `questions`
 --
-ALTER TABLE `posts`
-  ADD PRIMARY KEY (`sno`);
+ALTER TABLE `questions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `post_by` (`post_by`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
+-- AUTO_INCREMENT for table `answers`
+--
+ALTER TABLE `answers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+
+--
 -- AUTO_INCREMENT for table `contacts`
 --
 ALTER TABLE `contacts`
-  MODIFY `sno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `sno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
--- AUTO_INCREMENT for table `posts`
+-- AUTO_INCREMENT for table `questions`
 --
-ALTER TABLE `posts`
-  MODIFY `sno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+ALTER TABLE `questions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `answers`
+--
+ALTER TABLE `answers`
+  ADD CONSTRAINT `answers_ibfk_1` FOREIGN KEY (`ans_of`) REFERENCES `questions` (`id`),
+  ADD CONSTRAINT `answers_ibfk_2` FOREIGN KEY (`post_by`) REFERENCES `users` (`user_id`);
+
+--
+-- Constraints for table `questions`
+--
+ALTER TABLE `questions`
+  ADD CONSTRAINT `questions_ibfk_1` FOREIGN KEY (`post_by`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
